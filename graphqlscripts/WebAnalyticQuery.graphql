@@ -1,6 +1,6 @@
 {
   viewer {
-    zones(filter: {zoneTag: "ec22c2d93e141870a563012bc1bac4c5"}) {
+    zones(filter: {zoneTag: "ZONETAG"}) {
       httpRequests1dGroups(orderBy: [date_DESC], limit: 1000, filter: {date_gt: "2022-01-01"}) {
         date: dimensions {
           date
