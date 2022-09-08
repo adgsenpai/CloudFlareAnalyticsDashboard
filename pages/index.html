@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="/static/img/statistics.png">
+    <title>
+        {{domainname}} Analytics Tool
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="/static/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/static/css/nucleo-svg.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="/static/css/nucleo-svg.css" rel="stylesheet" />
+    <link id="pagestyle" href="/static/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://cdn.plyr.io/3.6.2/plyr.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
+</head>
+
+<body>
+
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-body pt-2">
+                <a href="/" class="card-title h5 d-block text-darker">
+                    {{domainname}} Domain Analytics Tool as per
+                    <script>
+                        // print todays date
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+                        today = mm + '/' + dd + '/' + yyyy;
+                        document.write(today);
+                    </script>
+                </a>
+                <br>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Data Served Today</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        {{total_data_transfered_today}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="ni ni-cloud-upload-96 text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Requests Today</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        {{total_requests_today}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Total Page Views Today</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        {{total_page_views_today}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="ni ni-spaceship text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-capitalize font-weight-bold">Unique Devices Today</p>
+                                    <h5 class="font-weight-bolder mb-0">
+                                        {{total_devices_today}}
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                    <i class="ni ni-mobile-button text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>                        
+        </div>
+        <br>
+        <div class="row">        
+            <h6 style="font-family: 'Open Sans';" class="mb-0 text-uppercase text-dark font-weight-bold">Monthly domain stats</h6>
+            <br>
+            <div class="col-lg-7">
+                <div>                    
+                    <div class="card mb-3">
+                        <div class="card-body p-3">
+                          <div class="chart">
+                            <canvas id="line-chart" class="chart-canvas" height="300px"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card mb-3">
+                    <div class="card-body p-3">
+                      <div class="chart">
+                        <canvas id="broswer-chart" class="chart-canvas" height="300px"></canvas>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        </div>
+        <br>
+        <div class="row">
+            <!-- create table with columns country name, pageViews, threats -->
+            <h5 style="font-family: 'Open Sans';" class="mb-0 text-uppercase text-dark font-weight-bold">Top 10 Countries All Time Stats</h5>
+
+            <div class="col-lg-12">
+                <div class="card mb-3">
+                    <div class="card-body p-3">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Country</th>
+                                        <th scope="col">Page Views</th>
+                                        <th scope="col">DDoS Threats</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="CountryDataDOM">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+        <footer class="footer pt-3  ">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-lg-between">
+                    <div class="col-lg-6 mb-lg-0 mb-4">
+                        <div style="font-family: 'Open Sans';" class="copyright text-center text-sm text-muted text-lg-start">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> made with <i class="fa fa-heart" aria-hidden="true"></i> by
+                            <a href="https://adgstudios.co.za" class="font-weight-bold" target="_blank">ADGSTUDIOS</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+</body>
+
+    <!-- partial -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/html5media/1.1.8/html5media.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/plyr/3.6.8/plyr.min.js'></script>
+    <script src="/static/js/plugins/chartjs.min.js"></script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js "></script>
+    <script src="/static/js/soft-ui-dashboard.min.js?v=1.0.3 "></script>
+    <script>
+
+        const AnalyticsDF = {{AnalyticsDF | safe}};
+
+        const BroswerData = {{BroswerData | safe}};
+
+        const CountryData = {{CountryData | safe}};
+
+        var CountryDataDOM = document.getElementById("CountryDataDOM");
+
+        let CountryNames = Object.values(CountryData['clientCountryName']);
+        let Requests = Object.values(CountryData['requests']);
+        let Threats = Object.values(CountryData['threats']);
+
+        for (let i = 0; i < CountryNames.length; i++) {
+            CountryDataDOM.innerHTML += `<tr><td>${CountryNames[i]}</td><td>${Requests[i]}</td><td>${Threats[i]}</td></tr>`;
+        }
+
+
+        var ctx2 = document.getElementById("line-chart").getContext("2d");
+        var gradientStroke1 = ctx2.createLinearGradient(0, 230, 0, 50);
+        gradientStroke1.addColorStop(1, 'rgba(203,12,159,0.2)');
+        gradientStroke1.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke1.addColorStop(0, 'rgba(203,12,159,0)'); //purple colors
+        var gradientStroke2 = ctx2.createLinearGradient(0, 230, 0, 50);
+        gradientStroke2.addColorStop(1, 'rgba(20,23,39,0.2)');
+        gradientStroke2.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke2.addColorStop(0, 'rgba(20,23,39,0)'); //purple colors
+
+        var gradientStroke3 = ctx2.createLinearGradient(0, 230, 0, 50);
+        // red colors
+        gradientStroke3.addColorStop(1, 'rgba(255,0,0,0.2)');
+        gradientStroke3.addColorStop(0.2, 'rgba(72,72,176,0.0)');
+        gradientStroke3.addColorStop(0, 'rgba(255,0,0,0)'); //red colors
+
+
+        new Chart(ctx2, {
+        type: "line",
+        data: {
+            labels: Object.keys(AnalyticsDF['TotalGBTransfered']),
+            datasets: [{
+                label: "Total GB Transfered",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#cb0c9f",
+                borderWidth: 3,
+                backgroundColor: gradientStroke1,
+                fill: true,
+                data: Object.values(AnalyticsDF['TotalGBTransfered']),
+                maxBarThickness: 6
+            },
+            {
+                label: "Total Page Views",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#3A416F",
+                borderWidth: 3,
+                backgroundColor: gradientStroke2,
+                fill: true,
+                data: Object.values(AnalyticsDF['TotalPageViews']),
+                maxBarThickness: 6
+            },
+            {
+                label: "Total Requests",
+                tension: 0.4,
+                borderWidth: 0,
+                pointRadius: 0,
+                borderColor: "#00FF00",
+                borderWidth: 3,
+                backgroundColor: gradientStroke3,
+                fill: true,
+                data: Object.values(AnalyticsDF['TotalRequests']),
+                maxBarThickness: 6
+            }
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+            legend: {
+                display: true,
+            }
+            },
+            interaction: {
+            intersect: false,
+            mode: 'index',
+            },
+            scales: {
+            y: {
+                grid: {
+                drawBorder: false,
+                display: true,
+                drawOnChartArea: true,
+                drawTicks: false,
+                borderDash: [5, 5]
+                },
+                ticks: {
+                display: true,
+                padding: 10,
+                color: '#b2b9bf',
+                font: {
+                    size: 11,
+                    family: "Open Sans",
+                    style: 'normal',
+                    lineHeight: 2
+                },
+                }
+            },
+            x: {
+                grid: {
+                drawBorder: false,
+                display: false,
+                drawOnChartArea: false,
+                drawTicks: false,
+                borderDash: [5, 5]
+                },
+                ticks: {
+                display: true,
+                color: '#b2b9bf',
+                padding: 10,
+                font: {
+                    size: 11,
+                    family: "Open Sans",
+                    style: 'normal',
+                    lineHeight: 2
+                },
+                }
+            },
+            },
+        },
+        });
+
+
+var ctx4 = document.getElementById("broswer-chart").getContext("2d");
+
+new Chart(ctx4, {
+  type: "line",
+    data: {
+        labels: Object.keys(BroswerData),
+        datasets: [{
+            label: "Broswer Type Used",
+            tension: 0.4,
+            borderWidth: 0,
+            pointRadius: 0,
+            borderColor: "#000000",
+            borderWidth: 3,
+            backgroundColor: gradientStroke1,
+            fill: true,
+            data: Object.values(BroswerData),
+            maxBarThickness: 6
+        }
+        ],
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+        legend: {
+            display: true,
+        }
+        },
+        interaction: {
+        intersect: false,
+        mode: 'index',
+        },
+        scales: {
+        y: {
+            grid: {
+            drawBorder: false,
+            display: true,
+            drawOnChartArea: true,
+            drawTicks: false,
+            borderDash: [5, 5]
+            },
+            ticks: {
+            display: true,
+            padding: 10,
+            color: '#b2b9bf',
+            font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+            },
+            }
+        },
+        x: {
+            grid: {
+            drawBorder: false,
+            display: false,
+            drawOnChartArea: false,
+            drawTicks: false,
+            borderDash: [5, 5]
+            },
+            ticks: {
+            display: true,
+            color: '#b2b9bf',
+            padding: 10,
+            font: {
+                size: 11,
+                family: "Open Sans",
+                style: 'normal',
+                lineHeight: 2
+            },
+            }
+        },
+        },
+    },
+    });
+  
+    </script>
+</html>

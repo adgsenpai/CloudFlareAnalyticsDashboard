@@ -1,0 +1,6 @@
+gunicorn
+Flask
+pandas
+numpy
+pycountry
+requests
